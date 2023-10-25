@@ -6,6 +6,7 @@ class SecondTextFiled extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      decoration: BoxDecoration(color: Colors.white),
       height: 25,
       width: 100,
       child: TextField(

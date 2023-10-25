@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'package:reading/widgets/lastpagetext.dart';
+
 class LastScreen extends StatelessWidget {
   const LastScreen(
       {super.key,
@@ -10,7 +12,8 @@ class LastScreen extends StatelessWidget {
       required this.nozzel1ca,
       required this.nozzle2ca,
       required this.netpay,
-      required this.cashhad});
+      required this.cashhad,
+      required this.twot});
   final nozzel1ms;
   final nozzle2ms;
   final nozzel1hsd;
@@ -19,34 +22,60 @@ class LastScreen extends StatelessWidget {
   final nozzle2ca;
   final netpay;
   final cashhad;
+  final twot;
+
   _grandtotal() {
-    final grandtotal =
-        nozzel1ms + nozzel1hsd + nozzel1ca + nozzle2ms + nozzle2hsd + nozzle2ca;
+    final grandtotal = ((nozzel1ms + nozzle2ms) * 108) +
+        ((nozzel1hsd + nozzle2hsd) * 96.9) +
+        ((nozzel1ca + nozzle2ca) * 86) +
+        twot;
     return grandtotal.toString();
+  }
+
+  _netpay() {
+    final netpay1 = (((nozzel1ms + nozzle2ms) * 108) +
+            ((nozzel1hsd + nozzle2hsd) * 96.9) +
+            ((nozzel1ca + nozzle2ca) * 86) +
+            twot) -
+        netpay;
+    return netpay1.toString();
+  }
+
+  _short() {
+    final short = cashhad -
+        ((((nozzel1ms + nozzle2ms) * 108) +
+                ((nozzel1hsd + nozzle2hsd) * 96.9) +
+                ((nozzel1ca + nozzle2ca) * 86) +
+                twot) -
+            netpay);
+    return short.toString();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        elevation: 0,
         title: Text(
-          'DAY BOOK',
+          'Sales Reports',
           style: TextStyle(
-            fontSize: 30,
-            color: Color.fromARGB(255, 61, 5, 216),
+            fontSize: 20,
+            color: Color.fromARGB(255, 0, 0, 0),
             fontWeight: FontWeight.bold,
           ),
         ),
-        backgroundColor: Colors.white,
+        backgroundColor: Color.fromARGB(255, 63, 255, 88),
         toolbarHeight: 100,
         flexibleSpace: Container(
           decoration: const BoxDecoration(),
         ),
         actions: [
           Container(
-            width: 150,
+            margin: EdgeInsets.all(20),
+            width: 50,
+            height: 30,
             child: Image.asset(
-              'assets/cartoon.jpg',
+              'assets/petrol3.png',
             ),
           ),
         ],
@@ -56,247 +85,334 @@ class LastScreen extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              const SizedBox(
-                height: 40,
+              SizedBox(
+                height: 20,
               ),
-              const Center(
-                child: Text(
-                  'Petrol Sale Report',
-                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+              Container(
+                margin: EdgeInsets.all(MediaQuery.of(context).size.width / 40),
+                padding: EdgeInsets.all(MediaQuery.of(context).size.width / 40),
+                width: double.infinity,
+                decoration: BoxDecoration(
+                  color: Color.fromARGB(255, 63, 255, 88),
+                  // borderRadius: BorderRadius.all(Radius.circular(20)),
+                ),
+                child: Column(
+                  children: [
+                    const Center(
+                      child:
+                          LastPageText(text: 'Petrol Sale Report', size: 20.0),
+                    ),
+                    const SizedBox(
+                      height: 30,
+                    ),
+                    Row(
+                      children: [
+                        LastPageText(
+                            text: '        NOZZLE 1 MS :        ', size: 15.0),
+                        Container(
+                          height: 25,
+                          width: 100,
+                          child: TextField(
+                            textAlign: TextAlign.center,
+                            decoration: InputDecoration(
+                                contentPadding: EdgeInsets.all(8),
+                                hintText: nozzel1ms.toString(),
+                                hintStyle: TextStyle(color: Colors.black)),
+                          ),
+                        )
+                      ],
+                    ),
+                    Row(
+                      children: [
+                        LastPageText(
+                            text: '        NOZZLE 2 MS :        ', size: 15.0),
+                        Container(
+                          height: 25,
+                          width: 100,
+                          child: TextField(
+                            textAlign: TextAlign.center,
+                            decoration: InputDecoration(
+                                contentPadding: EdgeInsets.all(8),
+                                hintText: nozzle2ms.toString(),
+                                hintStyle: TextStyle(color: Colors.black)),
+                          ),
+                        )
+                      ],
+                    ),
+                    const SizedBox(
+                      height: 30,
+                    ),
+                    Row(
+                      children: [
+                        LastPageText(
+                            text: '        Total Sale (Petrol) :      ',
+                            size: 15.0),
+                        Container(
+                          height: 25,
+                          width: 100,
+                          child: TextField(
+                            textAlign: TextAlign.center,
+                            decoration: InputDecoration(
+                                contentPadding: EdgeInsets.all(8),
+                                hintText:
+                                    ((nozzel1ms + nozzle2ms) * 108).toString(),
+                                hintStyle: TextStyle(color: Colors.black)),
+                          ),
+                        )
+                      ],
+                    ),
+                  ],
                 ),
               ),
               const SizedBox(
-                height: 30,
+                height: 10,
               ),
-              Row(
-                children: [
-                  const Text('        NOZZLE 1 MS :        '),
-                  Container(
-                    height: 25,
-                    width: 100,
-                    child: TextField(
-                      textAlign: TextAlign.center,
-                      decoration: InputDecoration(
-                          contentPadding: EdgeInsets.all(10),
-                          hintText: nozzel1ms.toString(),
-                          hintStyle: TextStyle(color: Colors.black)),
-                    ),
-                  )
-                ],
-              ),
-              Row(
-                children: [
-                  const Text('        NOZZLE 2 MS :        '),
-                  Container(
-                    height: 25,
-                    width: 100,
-                    child: TextField(
-                      textAlign: TextAlign.center,
-                      decoration: InputDecoration(
-                          contentPadding: EdgeInsets.all(10),
-                          hintText: nozzel1ms.toString(),
-                          hintStyle: TextStyle(color: Colors.black)),
-                    ),
-                  )
-                ],
-              ),
-              const SizedBox(
-                height: 30,
-              ),
-              Row(
-                children: [
-                  const Text('        Total Sale (Petrol) :      '),
-                  Container(
-                    height: 25,
-                    width: 100,
-                    child: TextField(
-                      decoration: InputDecoration(
-                          hintText: (nozzel1ms + nozzle2ms).toString(),
-                          hintStyle: TextStyle(color: Colors.black)),
-                    ),
-                  )
-                ],
-              ),
-              const SizedBox(
-                height: 40,
-              ),
-              const Center(
-                child: Text(
-                  'Diesel Sale Report',
-                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+              Container(
+                margin: EdgeInsets.all(MediaQuery.of(context).size.width / 40),
+                padding: EdgeInsets.all(MediaQuery.of(context).size.width / 40),
+                width: double.infinity,
+                decoration: BoxDecoration(
+                  color: Color.fromARGB(255, 63, 255, 88),
+                  //  borderRadius: BorderRadius.all(Radius.circular(20)),
                 ),
-              ),
-              const SizedBox(
-                height: 30,
-              ),
-              Row(
-                children: [
-                  const Text('        NOZZLE 1 HSD :        '),
-                  Container(
-                    height: 25,
-                    width: 100,
-                    child: TextField(
-                      decoration: InputDecoration(
-                          hintText: nozzel1hsd.toString(),
-                          hintStyle: TextStyle(color: Colors.black)),
+                child: Column(
+                  children: [
+                    const Center(
+                        child: LastPageText(
+                            text: 'Diesel Sale Report', size: 20.0)),
+                    const SizedBox(
+                      height: 30,
                     ),
-                  )
-                ],
-              ),
-              Row(
-                children: [
-                  Text('        NOZZLE 2 HSD :        '),
-                  Container(
-                    height: 25,
-                    width: 100,
-                    child: TextField(
-                      decoration: InputDecoration(
-                          hintText: nozzle2hsd.toString(),
-                          hintStyle: TextStyle(color: Colors.black)),
+                    Row(
+                      children: [
+                        LastPageText(
+                            text: '        NOZZLE 1 HSD :        ', size: 15.0),
+                        Container(
+                          height: 25,
+                          width: 100,
+                          child: TextField(
+                            textAlign: TextAlign.center,
+                            decoration: InputDecoration(
+                                contentPadding: EdgeInsets.all(8),
+                                hintText: nozzel1hsd.toString(),
+                                hintStyle: TextStyle(color: Colors.black)),
+                          ),
+                        )
+                      ],
                     ),
-                  )
-                ],
-              ),
-              SizedBox(
-                height: 30,
-              ),
-              Row(
-                children: [
-                  Text('        Total Sale (Diesel) :      '),
-                  Container(
-                    height: 25,
-                    width: 100,
-                    child: TextField(
-                      decoration: InputDecoration(
-                          hintText: (nozzel1hsd + nozzle2hsd).toString(),
-                          hintStyle: TextStyle(color: Colors.black)),
+                    Row(
+                      children: [
+                        LastPageText(
+                            text: '        NOZZLE 2 HSD :        ', size: 15.0),
+                        Container(
+                          height: 25,
+                          width: 100,
+                          child: TextField(
+                            textAlign: TextAlign.center,
+                            decoration: InputDecoration(
+                                contentPadding: EdgeInsets.all(8),
+                                hintText: nozzle2hsd.toString(),
+                                hintStyle: TextStyle(color: Colors.black)),
+                          ),
+                        )
+                      ],
                     ),
-                  )
-                ],
-              ),
-              SizedBox(
-                height: 40,
-              ),
-              Center(
-                child: Text(
-                  'CNG Sale Report',
-                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                    SizedBox(
+                      height: 30,
+                    ),
+                    Row(
+                      children: [
+                        LastPageText(
+                            text: '        Total Sale (Diesel) :      ',
+                            size: 15.0),
+                        Container(
+                          height: 25,
+                          width: 100,
+                          child: TextField(
+                            textAlign: TextAlign.center,
+                            decoration: InputDecoration(
+                                contentPadding: EdgeInsets.all(8),
+                                hintText: ((nozzel1hsd + nozzle2hsd) * 96.90)
+                                    .toString(),
+                                hintStyle: TextStyle(color: Colors.black)),
+                          ),
+                        )
+                      ],
+                    ),
+                  ],
                 ),
               ),
               SizedBox(
-                height: 30,
+                height: 10,
               ),
-              Row(
-                children: [
-                  Text('        NOZZLE 1 CNG :        '),
-                  Container(
-                    height: 25,
-                    width: 100,
-                    child: TextField(
-                      decoration: InputDecoration(
-                          hintText: nozzel1ca.toString(),
-                          hintStyle: TextStyle(color: Colors.black)),
+              Container(
+                margin: EdgeInsets.all(MediaQuery.of(context).size.width / 40),
+                padding: EdgeInsets.all(MediaQuery.of(context).size.width / 40),
+                width: double.infinity,
+                decoration: BoxDecoration(
+                  color: Color.fromARGB(255, 63, 255, 88),
+                  //borderRadius: BorderRadius.all(Radius.circular(20)),
+                ),
+                child: Column(
+                  children: [
+                    Center(
+                        child:
+                            LastPageText(text: 'CNG Sale Report', size: 20.0)),
+                    SizedBox(
+                      height: 30,
                     ),
-                  )
-                ],
-              ),
-              Row(
-                children: [
-                  Text('        NOZZLE 2 CNG :        '),
-                  Container(
-                    height: 25,
-                    width: 100,
-                    child: TextField(
-                      decoration: InputDecoration(
-                          hintText: nozzle2ca.toString(),
-                          hintStyle: TextStyle(color: Colors.black)),
+                    Row(
+                      children: [
+                        LastPageText(
+                            text: '        NOZZLE 1 CNG :        ', size: 15.0),
+                        Container(
+                          height: 25,
+                          width: 100,
+                          child: TextField(
+                            textAlign: TextAlign.center,
+                            decoration: InputDecoration(
+                                contentPadding: EdgeInsets.all(8),
+                                hintText: nozzel1ca.toString(),
+                                hintStyle: TextStyle(color: Colors.black)),
+                          ),
+                        )
+                      ],
                     ),
-                  )
-                ],
-              ),
-              SizedBox(
-                height: 30,
-              ),
-              Row(
-                children: [
-                  Text('        Total Sale (CNG) :      '),
-                  Container(
-                    height: 25,
-                    width: 100,
-                    child: TextField(
-                      decoration: InputDecoration(
-                          hintText: (nozzel1ca + nozzle2ca).toString(),
-                          hintStyle: TextStyle(color: Colors.black)),
+                    Row(
+                      children: [
+                        LastPageText(
+                            text: '        NOZZLE 2 CNG :        ', size: 15.0),
+                        Container(
+                          height: 25,
+                          width: 100,
+                          child: TextField(
+                            textAlign: TextAlign.center,
+                            decoration: InputDecoration(
+                                contentPadding: EdgeInsets.all(8),
+                                hintText: nozzle2ca.toString(),
+                                hintStyle: TextStyle(color: Colors.black)),
+                          ),
+                        )
+                      ],
                     ),
-                  )
-                ],
-              ),
-              SizedBox(
-                height: 40,
-              ),
-              Center(
-                child: Text(
-                  'Total Sale Report',
-                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                    SizedBox(
+                      height: 30,
+                    ),
+                    Row(
+                      children: [
+                        LastPageText(
+                            text: '        Total Sale (CNG) :      ',
+                            size: 15.0),
+                        Container(
+                          height: 25,
+                          width: 100,
+                          child: TextField(
+                            textAlign: TextAlign.center,
+                            decoration: InputDecoration(
+                                contentPadding: EdgeInsets.all(8),
+                                hintText:
+                                    ((nozzel1ca + nozzle2ca) * 86).toString(),
+                                hintStyle: TextStyle(color: Colors.black)),
+                          ),
+                        )
+                      ],
+                    ),
+                  ],
                 ),
               ),
               SizedBox(
-                height: 30,
+                height: 10,
               ),
-              Row(
-                children: [
-                  Text('        Grant Total Sale :        '),
-                  Container(
-                    height: 25,
-                    width: 100,
-                    child: TextField(
-                      decoration: InputDecoration(
-                          hintText: _grandtotal(),
-                          hintStyle: TextStyle(color: Colors.black)),
+              Container(
+                margin: EdgeInsets.all(MediaQuery.of(context).size.width / 40),
+                padding: EdgeInsets.all(MediaQuery.of(context).size.width / 40),
+                width: double.infinity,
+                decoration: BoxDecoration(
+                  color: Color.fromARGB(255, 63, 255, 88),
+                  //borderRadius: BorderRadius.all(Radius.circular(20)),
+                ),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Center(
+                      child:
+                          LastPageText(text: 'Total Sale Report', size: 20.0),
                     ),
-                  )
-                ],
-              ),
-              Row(
-                children: [
-                  Text('        NET Amount :        '),
-                  Container(
-                    height: 25,
-                    width: 100,
-                    child: TextField(
-                      decoration: InputDecoration(
-                          hintText: netpay.toString(),
-                          hintStyle: TextStyle(color: Colors.black)),
+                    SizedBox(
+                      height: 30,
                     ),
-                  )
-                ],
-              ),
-              Row(
-                children: [
-                  Text('        Cash In Hand :        '),
-                  Container(
-                    height: 25,
-                    width: 100,
-                    child: TextField(
-                      decoration: InputDecoration(
-                          hintText: cashhad.toString(),
-                          hintStyle: TextStyle(color: Colors.black)),
+                    Row(
+                      children: [
+                        LastPageText(
+                            text: '        Grant Total Sale :        ',
+                            size: 15.0),
+                        Container(
+                          height: 25,
+                          width: 100,
+                          child: TextField(
+                            textAlign: TextAlign.center,
+                            decoration: InputDecoration(
+                                contentPadding: EdgeInsets.all(8),
+                                hintText: _grandtotal(),
+                                hintStyle: TextStyle(color: Colors.black)),
+                          ),
+                        )
+                      ],
                     ),
-                  )
-                ],
-              ),
-              Row(
-                children: [
-                  Text('        Short / Excess :        '),
-                  Container(
-                    height: 25,
-                    width: 100,
-                    child: TextField(
-                      decoration: InputDecoration(
-                          hintStyle: TextStyle(color: Colors.grey[400])),
+                    Row(
+                      children: [
+                        LastPageText(
+                            text: '        NET Amount :        ', size: 15.0),
+                        Container(
+                          height: 25,
+                          width: 100,
+                          child: TextField(
+                            textAlign: TextAlign.center,
+                            decoration: InputDecoration(
+                                contentPadding: EdgeInsets.all(8),
+                                hintText: (_netpay()),
+                                hintStyle: TextStyle(color: Colors.black)),
+                          ),
+                        )
+                      ],
                     ),
-                  )
-                ],
+                    Row(
+                      children: [
+                        LastPageText(
+                            text: '        Cash In Hand :        ', size: 15.0),
+                        Container(
+                          height: 25,
+                          width: 100,
+                          child: TextField(
+                            textAlign: TextAlign.center,
+                            decoration: InputDecoration(
+                                contentPadding: EdgeInsets.all(8),
+                                hintText: cashhad.toString(),
+                                hintStyle: TextStyle(color: Colors.black)),
+                          ),
+                        )
+                      ],
+                    ),
+                    Row(
+                      children: [
+                        LastPageText(
+                            text: '        Short / Excess :        ',
+                            size: 15.0),
+                        Container(
+                          height: 25,
+                          width: 100,
+                          child: TextField(
+                            textAlign: TextAlign.center,
+                            decoration: InputDecoration(
+                                contentPadding: EdgeInsets.all(8),
+                                hintText: _short(),
+                                hintStyle: TextStyle(color: Colors.black)),
+                          ),
+                        )
+                      ],
+                    ),
+                  ],
+                ),
               ),
               SizedBox(
                 height: 30,

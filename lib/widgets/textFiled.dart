@@ -8,8 +8,11 @@ class TextFiledDesign extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.all(Radius.circular(30))),
       height: 25,
-      width: 100,
+      width: MediaQuery.of(context).size.width / 5,
       child: TextField(
         keyboardType: TextInputType.number,
         textAlign: TextAlign.center,

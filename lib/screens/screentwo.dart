@@ -11,13 +11,15 @@ class ScreenTwo extends StatefulWidget {
       required this.n1hsd,
       required this.n2hsd,
       required this.ca,
-      required this.cb});
+      required this.cb,
+      required this.twot});
   final n1ms;
   final n2ms;
   final n1hsd;
   final n2hsd;
   final ca;
   final cb;
+  final twot;
 
   @override
   State<ScreenTwo> createState() => _ScreenTwoState();
@@ -57,6 +59,7 @@ class _ScreenTwoState extends State<ScreenTwo> {
       ));
       return;
     }
+
     final cashhand = int.parse(ch.text);
     final netvalue = int.parse(lp.text) +
         int.parse(ags.text) +
@@ -75,10 +78,11 @@ class _ScreenTwoState extends State<ScreenTwo> {
                 nozzle2ms: widget.n2ms,
                 nozzel1hsd: widget.n1hsd,
                 nozzle2hsd: widget.n2hsd,
-                nozzle2ca: widget.ca,
-                nozzel1ca: widget.cb,
+                nozzle2ca: widget.cb,
+                nozzel1ca: widget.ca,
                 netpay: netvalue,
                 cashhad: cashhand,
+                twot: widget.twot,
               )),
     );
   }
@@ -101,24 +105,27 @@ class _ScreenTwoState extends State<ScreenTwo> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        elevation: 0,
         title: Text(
-          'DAY BOOK',
+          'Expense Entry',
           style: TextStyle(
-            fontSize: 30,
-            color: Color.fromARGB(255, 61, 5, 216),
+            fontSize: 20,
+            color: Color.fromARGB(255, 0, 0, 0),
             fontWeight: FontWeight.bold,
           ),
         ),
-        backgroundColor: Colors.white,
+        backgroundColor: Color.fromARGB(255, 63, 255, 88),
         toolbarHeight: 100,
         flexibleSpace: Container(
           decoration: const BoxDecoration(),
         ),
         actions: [
           Container(
-            width: 150,
+            margin: EdgeInsets.all(20),
+            width: 50,
+            height: 30,
             child: Image.asset(
-              'assets/cartoon.jpg',
+              'assets/petrol3.png',
             ),
           ),
         ],
@@ -133,8 +140,9 @@ class _ScreenTwoState extends State<ScreenTwo> {
                 padding: EdgeInsets.all(13),
                 width: double.infinity,
                 decoration: BoxDecoration(
-                    color: Color.fromARGB(213, 17, 2, 233),
-                    borderRadius: BorderRadius.all(Radius.circular(20))),
+                  color: Color.fromARGB(255, 63, 255, 88),
+                  // borderRadius: BorderRadius.all(Radius.circular(20)),
+                ),
                 margin: EdgeInsets.all(20),
                 child: Column(
                   children: [
@@ -154,7 +162,7 @@ class _ScreenTwoState extends State<ScreenTwo> {
                     ),
                     Row(
                       children: [
-                        HomePageText(text: 'AGS :                       '),
+                        HomePageText(text: 'AGS :                      '),
                         SecondTextFiled(
                           data: ags,
                         )
@@ -165,7 +173,7 @@ class _ScreenTwoState extends State<ScreenTwo> {
                     ),
                     Row(
                       children: [
-                        HomePageText(text: 'SIB :                         '),
+                        HomePageText(text: 'SIB :                        '),
                         SecondTextFiled(
                           data: sib,
                         )
@@ -176,7 +184,7 @@ class _ScreenTwoState extends State<ScreenTwo> {
                     ),
                     Row(
                       children: [
-                        HomePageText(text: 'Paytm :                    '),
+                        HomePageText(text: 'Paytm :                   '),
                         SecondTextFiled(
                           data: ptm,
                         )
@@ -187,7 +195,7 @@ class _ScreenTwoState extends State<ScreenTwo> {
                     ),
                     Row(
                       children: [
-                        HomePageText(text: 'Gpay SIB :                '),
+                        HomePageText(text: 'Gpay SIB :              '),
                         SecondTextFiled(
                           data: gpay,
                         )
@@ -198,7 +206,7 @@ class _ScreenTwoState extends State<ScreenTwo> {
                     ),
                     Row(
                       children: [
-                        HomePageText(text: 'Extra Reward:          '),
+                        HomePageText(text: 'Extra Reward:        '),
                         SecondTextFiled(
                           data: er,
                         )
@@ -209,7 +217,7 @@ class _ScreenTwoState extends State<ScreenTwo> {
                     ),
                     Row(
                       children: [
-                        HomePageText(text: 'Extra Power :           '),
+                        HomePageText(text: 'Extra Power :          '),
                         SecondTextFiled(
                           data: ep,
                         )
@@ -219,7 +227,7 @@ class _ScreenTwoState extends State<ScreenTwo> {
                       height: 20,
                     ),
                     Row(children: [
-                      HomePageText(text: ' Indent :                     '),
+                      HomePageText(text: ' Indent :                    '),
                       SecondTextFiled(
                         data: idt,
                       ),
@@ -229,7 +237,7 @@ class _ScreenTwoState extends State<ScreenTwo> {
                     ),
                     Row(
                       children: [
-                        HomePageText(text: 'Cash In Hand :          '),
+                        HomePageText(text: 'Cash In Hand :         '),
                         SecondTextFiled(
                           data: ch,
                         )
@@ -245,11 +253,11 @@ class _ScreenTwoState extends State<ScreenTwo> {
                   onPressed: _submitdata,
                   style: ButtonStyle(
                       backgroundColor: MaterialStateProperty.all(
-                    Color.fromARGB(213, 17, 2, 233),
+                    Color.fromARGB(255, 63, 255, 88),
                   )),
                   child: Text(
                     'Find Short',
-                    style: TextStyle(color: Colors.white),
+                    style: TextStyle(color: const Color.fromARGB(255, 8, 7, 7)),
                   ))
             ],
           ),

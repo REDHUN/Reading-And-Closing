@@ -27,7 +27,7 @@ class _HomePageState extends State<HomePage> {
   final cngaclo = TextEditingController();
   final cngbop = TextEditingController();
   final cngbclo = TextEditingController();
-  final Twot = TextEditingController();
+  final twot = TextEditingController();
 
   void _openAddRate() {
     showModalBottomSheet(
@@ -45,9 +45,11 @@ class _HomePageState extends State<HomePage> {
         cngaop.text.isEmpty ||
         cngbclo.text.isEmpty ||
         cngbop.text.isEmpty ||
-        Twot.text.isEmpty ||
+        twot.text.isEmpty ||
         mstest.text.isEmpty ||
-        hsdtest.text.isEmpty) {
+        hsdtest.text.isEmpty ||
+        ms2clo.text.isEmpty ||
+        ms2clo.text.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
         content: const Text('Please Enter All Values.'),
       ));
@@ -56,7 +58,7 @@ class _HomePageState extends State<HomePage> {
     final n1ms = (int.parse(ms1clo.text) - int.parse(ms1op.text)) -
         int.parse(mstest.text);
     final n2ms = (int.parse(ms2clo.text) - int.parse(ms2op.text));
-    final n1hsd = (int.parse(hsd2clo.text) - int.parse(hsd1op.text)) -
+    final n1hsd = (int.parse(hds1clo.text) - int.parse(hsd1op.text)) -
         int.parse(hsdtest.text);
     final n2hsd = (int.parse(hsd2clo.text) - int.parse(hsd2op.text));
 
@@ -73,6 +75,7 @@ class _HomePageState extends State<HomePage> {
                 ca: ca,
                 cb: cb,
                 n2hsd: n2hsd,
+                twot: int.parse(twot.text),
               )),
     );
   }
@@ -91,7 +94,7 @@ class _HomePageState extends State<HomePage> {
     hsd1op.dispose();
     mstest.dispose();
     hsdtest.dispose();
-    Twot.dispose();
+    twot.dispose();
     cngaclo.dispose();
     cngaop.dispose();
     cngbclo.dispose();
@@ -103,75 +106,130 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
+          elevation: 0,
           title: Text(
             'DAY BOOK',
             style: TextStyle(
-              fontSize: 30,
-              color: Color.fromARGB(255, 61, 5, 216),
+              fontSize: 20,
+              color: Color.fromARGB(255, 0, 0, 0),
               fontWeight: FontWeight.bold,
             ),
           ),
-          backgroundColor: Colors.white,
+          backgroundColor: Color.fromARGB(255, 63, 255, 88),
           toolbarHeight: 100,
           flexibleSpace: Container(
             decoration: const BoxDecoration(),
           ),
           actions: [
             Container(
-              width: 150,
+              margin: EdgeInsets.all(20),
+              width: 50,
+              height: 30,
               child: Image.asset(
-                'assets/cartoon.jpg',
+                'assets/petrol3.png',
               ),
             ),
-            IconButton(
-              onPressed: _openAddRate,
-              icon: const Icon(Icons.settings),
-            )
           ],
         ),
-        body: SingleChildScrollView(
-          child: Container(
-            height: MediaQuery.of(context).size.height,
-            decoration: BoxDecoration(color: Colors.white),
-            margin: EdgeInsets.only(right: 10, left: 10, bottom: 20),
+        drawer: Drawer(
+          child: ListView(
+            padding: const EdgeInsets.all(0),
+            children: [
+              const DrawerHeader(
+                decoration: BoxDecoration(
+                  color: Color.fromARGB(255, 63, 255, 88),
+                ), //BoxDecoration
+                child: UserAccountsDrawerHeader(
+                  decoration: BoxDecoration(
+                    color: Color.fromARGB(255, 63, 255, 88),
+                  ),
+                  accountName: Text(
+                    "Abhishek Mishra",
+                    style: TextStyle(fontSize: 18),
+                  ),
+                  accountEmail: Text("abhishekm977@gmail.com"),
+                  currentAccountPictureSize: Size.square(50),
+                  currentAccountPicture: CircleAvatar(
+                    backgroundColor: Color.fromARGB(255, 165, 255, 137),
+                    child: Text(
+                      "A",
+                      style: TextStyle(fontSize: 30.0, color: Colors.blue),
+                    ), //Text
+                  ), //circleAvatar
+                ), //UserAccountDrawerHeader
+              ), //DrawerHeader
+              ListTile(
+                leading: const Icon(Icons.person),
+                title: const Text(' My Profile '),
+                onTap: () {
+                  Navigator.pop(context);
+                },
+              ),
+              ListTile(
+                leading: const Icon(Icons.book),
+                title: const Text(' Change Rate'),
+                onTap: () {
+                  Navigator.pop(context);
+                },
+              ),
+              ListTile(
+                leading: const Icon(Icons.workspace_premium),
+                title: const Text(' About Developer '),
+                onTap: () {
+                  Navigator.pop(context);
+                },
+              ),
+
+              ListTile(
+                leading: const Icon(Icons.logout),
+                title: const Text('LogOut'),
+                onTap: () {
+                  Navigator.pop(context);
+                },
+              ),
+            ],
+          ),
+        ),
+        body: SizedBox(
+          height: double.infinity,
+          child: SingleChildScrollView(
             child: Column(
               children: [
+                SizedBox(
+                  height: MediaQuery.of(context).size.width / 10,
+                ),
                 Container(
-                  padding: EdgeInsets.all(13),
+                  margin:
+                      EdgeInsets.all(MediaQuery.of(context).size.width / 40),
+                  padding:
+                      EdgeInsets.all(MediaQuery.of(context).size.width / 40),
                   width: double.infinity,
                   decoration: BoxDecoration(
-                      color: Color.fromARGB(213, 17, 2, 233),
-                      borderRadius: BorderRadius.all(Radius.circular(20))),
+                    color: Color.fromARGB(255, 63, 255, 88),
+                    // borderRadius: BorderRadius.all(Radius.circular(20)),
+                  ),
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Column(
                         children: [
                           Row(
                             children: [
-                              Text(
-                                "MS 1:   ",
-                                style: TextStyle(
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.bold),
-                              ),
+                              HomePageText(text: "MS 1:   "),
                               TextFiledDesign(
                                 hint: 'Opening',
                                 ControllerText: ms1op,
                               ),
                               SizedBox(
-                                width: 20,
+                                width: MediaQuery.of(context).size.width / 16,
                               ),
                               TextFiledDesign(
                                 hint: "Closing",
                                 ControllerText: ms1clo,
                               ),
                               SizedBox(
-                                width: 10,
-                              ),
-                              SizedBox(
-                                width: 20,
+                                width: MediaQuery.of(context).size.width / 16,
                               ),
                             ],
                           ),
@@ -185,18 +243,15 @@ class _HomePageState extends State<HomePage> {
                                 hint: 'Opening',
                                 ControllerText: ms2op,
                               ),
-                              const SizedBox(
-                                width: 20,
+                              SizedBox(
+                                width: MediaQuery.of(context).size.width / 16,
                               ),
                               TextFiledDesign(
                                 hint: 'Closing',
                                 ControllerText: ms2clo,
                               ),
-                              const SizedBox(
-                                width: 10,
-                              ),
                               SizedBox(
-                                width: 20,
+                                width: MediaQuery.of(context).size.width / 16,
                               ),
                             ],
                           ),
@@ -204,7 +259,7 @@ class _HomePageState extends State<HomePage> {
                       ),
                       SizedBox(
                           height: 25,
-                          width: 40,
+                          width: MediaQuery.of(context).size.width / 8,
                           child: TextFiledDesign(
                             hint: 'Test',
                             ControllerText: mstest,
@@ -216,12 +271,15 @@ class _HomePageState extends State<HomePage> {
                   height: 40,
                 ),
                 Container(
+                  margin:
+                      EdgeInsets.all(MediaQuery.of(context).size.width / 40),
                   padding:
-                      EdgeInsets.only(top: 10, bottom: 10, right: 5, left: 5),
+                      EdgeInsets.all(MediaQuery.of(context).size.width / 40),
                   width: double.infinity,
                   decoration: BoxDecoration(
-                      color: Color.fromARGB(213, 17, 2, 233),
-                      borderRadius: BorderRadius.all(Radius.circular(20))),
+                    color: Color.fromARGB(255, 63, 255, 88),
+                    //borderRadius: BorderRadius.all(Radius.circular(20),),
+                  ),
                   child: Row(
                     children: [
                       Column(
@@ -234,17 +292,14 @@ class _HomePageState extends State<HomePage> {
                                 ControllerText: hsd1op,
                               ),
                               SizedBox(
-                                width: 20,
+                                width: MediaQuery.of(context).size.width / 16,
                               ),
                               TextFiledDesign(
                                 hint: 'Closing',
                                 ControllerText: hds1clo,
                               ),
                               SizedBox(
-                                width: 10,
-                              ),
-                              SizedBox(
-                                width: 20,
+                                width: MediaQuery.of(context).size.width / 16,
                               ),
                             ],
                           ),
@@ -259,17 +314,14 @@ class _HomePageState extends State<HomePage> {
                                 ControllerText: hsd2op,
                               ),
                               SizedBox(
-                                width: 20,
+                                width: MediaQuery.of(context).size.width / 16,
                               ),
                               TextFiledDesign(
                                 hint: 'Closing',
                                 ControllerText: hsd2clo,
                               ),
                               SizedBox(
-                                width: 10,
-                              ),
-                              SizedBox(
-                                width: 20,
+                                width: MediaQuery.of(context).size.width / 16,
                               ),
                             ],
                           ),
@@ -277,7 +329,7 @@ class _HomePageState extends State<HomePage> {
                       ),
                       Container(
                           height: 25,
-                          width: 50,
+                          width: MediaQuery.of(context).size.width / 8,
                           child: TextFiledDesign(
                             hint: 'Test',
                             ControllerText: hsdtest,
@@ -289,36 +341,29 @@ class _HomePageState extends State<HomePage> {
                   height: 40,
                 ),
                 Container(
-                  padding: EdgeInsets.all(13),
+                  margin:
+                      EdgeInsets.all(MediaQuery.of(context).size.width / 40),
+                  padding:
+                      EdgeInsets.all(MediaQuery.of(context).size.width / 40),
                   width: double.infinity,
                   decoration: BoxDecoration(
-                      color: Color.fromARGB(213, 17, 2, 233),
-                      borderRadius: BorderRadius.all(Radius.circular(20))),
+                    color: Color.fromARGB(255, 63, 255, 88),
+                    // borderRadius: BorderRadius.all(Radius.circular(20)),
+                  ),
                   child: Column(
                     children: [
                       Row(
                         children: [
                           HomePageText(text: 'CNG A :  '),
-                          Container(
-                            height: 25,
-                            width: 100,
-                            child: TextFiledDesign(
-                                hint: "Opening", ControllerText: cngaop),
-                          ),
+                          TextFiledDesign(
+                              hint: "Opening", ControllerText: cngaop),
                           SizedBox(
-                            width: 20,
+                            width: MediaQuery.of(context).size.width / 16,
                           ),
-                          Container(
-                            height: 25,
-                            width: 100,
-                            child: TextFiledDesign(
-                                hint: "Closing", ControllerText: cngaclo),
-                          ),
+                          TextFiledDesign(
+                              hint: "Closing", ControllerText: cngaclo),
                           SizedBox(
-                            width: 10,
-                          ),
-                          SizedBox(
-                            width: 20,
+                            width: MediaQuery.of(context).size.width / 16,
                           ),
                         ],
                       ),
@@ -328,26 +373,15 @@ class _HomePageState extends State<HomePage> {
                       Row(
                         children: [
                           HomePageText(text: 'CNG B :  '),
-                          Container(
-                            height: 25,
-                            width: 100,
-                            child: TextFiledDesign(
-                                hint: "Opening", ControllerText: cngbop),
-                          ),
+                          TextFiledDesign(
+                              hint: "Opening", ControllerText: cngbop),
                           SizedBox(
-                            width: 20,
+                            width: MediaQuery.of(context).size.width / 16,
                           ),
-                          Container(
-                            height: 25,
-                            width: 100,
-                            child: TextFiledDesign(
-                                hint: "Closing", ControllerText: cngbclo),
-                          ),
+                          TextFiledDesign(
+                              hint: "Closing", ControllerText: cngbclo),
                           SizedBox(
-                            width: 10,
-                          ),
-                          SizedBox(
-                            width: 20,
+                            width: MediaQuery.of(context).size.width / 16,
                           ),
                         ],
                       ),
@@ -355,23 +389,22 @@ class _HomePageState extends State<HomePage> {
                   ),
                 ),
                 SizedBox(
-                  height: 25,
+                  height: 40,
                 ),
                 Container(
-                  padding: EdgeInsets.all(13),
+                  margin:
+                      EdgeInsets.all(MediaQuery.of(context).size.width / 40),
+                  padding:
+                      EdgeInsets.all(MediaQuery.of(context).size.width / 40),
                   width: double.infinity,
                   decoration: BoxDecoration(
-                      color: Color.fromARGB(213, 17, 2, 233),
-                      borderRadius: BorderRadius.all(Radius.circular(20))),
+                    color: Color.fromARGB(255, 63, 255, 88),
+                    // borderRadius: BorderRadius.all(Radius.circular(20)),
+                  ),
                   child: Row(
                     children: [
                       HomePageText(text: '2T :   '),
-                      Container(
-                        height: 25,
-                        width: 100,
-                        child: TextFiledDesign(
-                            hint: "2T Sale", ControllerText: Twot),
-                      ),
+                      TextFiledDesign(hint: "2T Sale", ControllerText: twot),
                     ],
                   ),
                 ),
@@ -382,7 +415,7 @@ class _HomePageState extends State<HomePage> {
                     onPressed: _submitData,
                     style: ButtonStyle(
                         backgroundColor: MaterialStateProperty.all(
-                      Color.fromARGB(213, 17, 2, 233),
+                      Color.fromARGB(255, 63, 255, 88),
                     )),
                     child: Text(
                       'Entry Expense',
